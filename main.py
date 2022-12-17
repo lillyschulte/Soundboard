@@ -33,5 +33,13 @@ def play_audio():
 play_button = tk.Button(window, text="Play", command=play_audio)
 play_button.pack()
 
+def stop_audio():
+    # Fade out the audio over 1000 milliseconds (1 second)
+    pygame.mixer.music.fadeout(1000)
+
+stop_button = tk.Button(window, text="Stop", command=stop_audio)
+stop_button.pack()
+
+
 # Run the main loop
 window.mainloop()
