@@ -29,12 +29,13 @@ def stop_audio():
     pygame.mixer.music.fadeout(1000)
 
 def browse_audio():
-    # Open a file dialog to select an audio file
-    file_path = filedialog.askopenfilename(filetypes=[("Audio files", "*.mp3;*.wav")])
-    # Update the label with the selected file name
-    label.config(text=file_path)
-    # Create a button to play the audio file
-    create_play_button(file_path)
+    # Open a file dialog to select multiple audio files
+    file_paths = filedialog.askopenfilenames(filetypes=[("Audio files", "*.mp3;*.wav")])
+    # Update the label with the selected file names
+    label.config(text=", ".join(file_paths))
+    # Create a button for each selected audio file
+    for file_path in file_paths:
+        create_play_button(file_path)
 
 browse_button = tk.Button(window, text="Browse", command=browse_audio)
 browse_button.pack()
