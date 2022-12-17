@@ -20,11 +20,11 @@ def play_audio(file_path):
     # Play the audio file
     pygame.mixer.music.play()
 
-def create_play_button(file_path):
+def create_play_button(file_path, parent):
     # Extract the file name from the file path
     file_name = os.path.basename(file_path)
     # Create a button to play the audio file
-    button = tk.Button(window, text=file_name, command=lambda: play_audio(file_path))
+    button = tk.Button(parent, text=file_name, command=lambda: play_audio(file_path))
     button.pack()
 
 def stop_audio():
@@ -36,9 +36,14 @@ def browse_audio():
     file_paths = filedialog.askopenfilenames(filetypes=[("Audio files", "*.mp3;*.wav")])
     # Update the label with the selected file names
     label.config(text=", ".join(file_paths))
+
+    # Create a frame to hold the buttons
+    frame = tk.Frame(window)
+    frame.pack()
+
     # Create a button for each selected audio file
     for file_path in file_paths:
-        create_play_button(file_path)
+        create_play_button(file_path, frame)
 
 def set_volume(value):
     # Set the volume of the currently playing audio file
