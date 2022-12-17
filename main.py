@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import pygame
+import os
 
 # Initialize pygame
 pygame.init()
@@ -20,8 +21,10 @@ def play_audio(file_path):
     pygame.mixer.music.play()
 
 def create_play_button(file_path):
+    # Extract the file name from the file path
+    file_name = os.path.basename(file_path)
     # Create a button to play the audio file
-    button = tk.Button(window, text=file_path, command=lambda: play_audio(file_path))
+    button = tk.Button(window, text=file_name, command=lambda: play_audio(file_path))
     button.pack()
 
 def stop_audio():
@@ -37,11 +40,20 @@ def browse_audio():
     for file_path in file_paths:
         create_play_button(file_path)
 
+def set_volume(value):
+    # Set the volume of the currently playing audio file
+    pygame.mixer.music.set_volume(float(value) / 100)
+
 browse_button = tk.Button(window, text="Browse", command=browse_audio)
 browse_button.pack()
 
 stop_button = tk.Button(window, text="Stop", command=stop_audio)
 stop_button.pack()
+
+# Create a scale widget to control the volume
+volume_scale = tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL, command=set_volume)
+volume_scale.set(100)
+volume_scale.pack()
 
 # Run the main loop
 window.mainloop()
